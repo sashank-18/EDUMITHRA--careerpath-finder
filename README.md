@@ -81,7 +81,6 @@ Pathfinder AI is an AI-powered learning platform that creates personalized learn
 | ORM            | SQLAlchemy            |
 | Authentication | JWT                   |
 | AI             | Groq LLM (Llama 3)    |
-| Automation     | n8n                   |
 
 ## Future Enhancements
 
