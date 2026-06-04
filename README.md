@@ -1,182 +1,96 @@
-# 🎓 Pathfinder AI — Intelligent Learning Platform
+# Pathfinder AI – Intelligent Learning Platform
 
-A full-stack AI-powered learning platform that generates personalized career roadmaps, quizzes, daily tasks, and coaching — powered by **Groq LLM**, **FastAPI**, and **n8n** automation.
+## Overview
 
----
+Pathfinder AI is an AI-powered learning platform that creates personalized learning roadmaps, generates quizzes, tracks progress, and provides AI coaching to help users achieve their career goals efficiently.
 
-## 🗂️ Project Structure
+## Key Features
 
-```
-ai-learning-platform/
-│
-├── backend/
-│   ├── main.py                    # FastAPI app entry point
-│   ├── config.py                  # Settings & env vars
-│   ├── database.py                # SQLAlchemy engine & session
-│   ├── models/
-│   │   └── models.py              # DB models (User, LearningPath, Progress, etc.)
-│   ├── routes/
-│   │   ├── auth.py                # Register / Login / Me
-│   │   ├── curriculum.py          # AI curriculum generation
-│   │   ├── quiz.py                # AI quiz generation & submission
-│   │   ├── chatbot.py             # AI tutor chatbot
-│   │   ├── progress.py            # Progress tracking, streaks, badges
-│   │   └── automation.py          # n8n webhook triggers
-│   └── services/
-│       ├── groq_service.py        # All Groq LLM calls
-│       └── auth_service.py        # JWT auth helpers
-│
-├── frontend/
-│   └── index.html                 # Complete SPA (all 6 pages, no framework)
-│
-├── n8n/
-│   └── workflow.json              # n8n automation workflow (import directly)
-│
-├── requirements.txt
-├── .env.example
-└── README.md
-```
+* Personalized AI-generated learning paths
+* AI-powered quiz generation and evaluation
+* Interactive AI tutor chatbot
+* Progress tracking with streaks and achievement badges
+* Daily learning tasks and recommendations
+* Automated learning workflows using n8n
 
----
+## System Architecture
 
-## ⚡ Quick Start
+### Frontend
 
-### 1. Clone & Install
+* HTML5
+* CSS3
+* JavaScript
 
-```bash
-git clone <your-repo>
-cd ai-learning-platform
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-```
+### Backend
 
-### 2. Configure Environment
+* FastAPI
+* REST APIs
+* JWT Authentication
 
-```bash
-cp .env.example .env
-# Edit .env with your keys
-```
+### Database
 
-Your `.env` file:
-```env
-GROQ_API_KEY=your_groq_api_key_here
-SECRET_KEY=your-super-secret-jwt-key-change-this
-DATABASE_URL=sqlite:///./learning_platform.db
-N8N_WEBHOOK_URL=http://localhost:5678/webhook
-GROQ_MODEL=llama3-70b-8192
-```
+* SQLAlchemy ORM
+* SQLite / PostgreSQL
 
-Get your free Groq API key at: https://console.groq.com
+### AI Layer
 
-### 3. Start the Backend
+* Groq API
+* Llama 3 Models
 
-```bash
-cd backend
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+### Automation
 
-API docs: http://localhost:8000/docs
+* n8n Workflow Automation
 
-### 4. Open the Frontend
+## Core Modules
 
-```bash
-cd frontend
-python -m http.server 3000
-# Visit: http://localhost:3000
-```
+### Authentication
 
-> The frontend works in **demo mode** without the backend. With backend running, it uses real Groq AI generation.
+* User Registration
+* Login
+* JWT-based Security
 
-### 5. Setup n8n (Optional)
+### Learning Path Generation
 
-```bash
-npm install -g n8n
-n8n start
-# Visit http://localhost:5678
-# Import n8n/workflow.json via Workflows → Import from file
-```
+* AI-generated personalized roadmaps
+* Career-specific curriculum planning
 
----
+### Quiz Engine
 
-## 🔌 API Reference
+* Dynamic quiz generation
+* Automated scoring and feedback
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/register` | Create account |
-| POST | `/api/auth/login` | Login, get JWT |
-| GET | `/api/auth/me` | Current user |
-| POST | `/api/curriculum/generate` | AI curriculum |
-| GET | `/api/curriculum/my-paths` | User's paths |
-| POST | `/api/quiz/generate` | AI quiz |
-| POST | `/api/quiz/submit` | Submit answers |
-| POST | `/api/chat/message` | Chatbot message |
-| POST | `/api/progress/update` | Log progress |
-| GET | `/api/progress/dashboard` | Dashboard data |
-| GET | `/api/progress/feedback` | AI feedback |
+### AI Tutor
 
----
+* Context-aware learning assistance
+* Interactive question answering
 
-## 🎨 Frontend Pages
+### Progress Dashboard
 
-| Page | Features |
-|------|----------|
-| **Auth** | Glassmorphism login/register, floating labels |
-| **Home** | Hero section, stats, how-it-works |
-| **Programs** | 6 featured program cards |
-| **Career Paths** | 4 presets + custom path → AI curriculum |
-| **Dashboard** | Streak, badges, tasks, progress, AI feedback |
-| **Quiz** | AI MCQ quiz with scoring and review |
-| **Chatbot** | Floating AI tutor (context-aware) |
+* Learning analytics
+* Streak tracking
+* Achievement badges
+* Performance insights
 
----
+## Technology Stack
 
-## 🏆 Gamification
+| Layer          | Technology            |
+| -------------- | --------------------- |
+| Frontend       | HTML, CSS, JavaScript |
+| Backend        | FastAPI               |
+| Database       | SQLite / PostgreSQL   |
+| ORM            | SQLAlchemy            |
+| Authentication | JWT                   |
+| AI             | Groq LLM (Llama 3)    |
+| Automation     | n8n                   |
 
-| Badge | Condition |
-|-------|-----------|
-| ⚡ Consistent | 3-day streak |
-| 🏆 7-Day Streak | 7 consecutive days |
-| 🌟 30-Day Streak | 30 consecutive days |
-| 🎓 Graduate | 100% course completion |
+## Future Enhancements
 
----
+* Voice-based AI tutor
+* Multi-language support
+* Advanced analytics dashboard
+* AI-powered project recommendations
+* Community learning features
 
-## 🚀 Deployment
+## Outcome
 
-**Backend** (Railway/Render):
-```bash
-uvicorn main:app --host 0.0.0.0 --port $PORT
-```
-
-**Frontend** — update `API` constant in `index.html`:
-```js
-const API = 'https://your-backend.railway.app/api';
-```
-Then deploy `frontend/` as a static site on Vercel/Netlify.
-
-**Production DB** — swap SQLite for PostgreSQL:
-```env
-DATABASE_URL=postgresql://user:password@host:5432/dbname
-```
-
----
-
-## 📦 Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | HTML5, CSS3, Vanilla JS (single-file SPA) |
-| Backend | FastAPI (Python 3.11+) |
-| Database | SQLite / PostgreSQL |
-| ORM | SQLAlchemy 2.0 |
-| Auth | JWT (python-jose) + bcrypt |
-| AI/LLM | Groq API — llama3-70b-8192 |
-| Automation | n8n (self-hosted) |
-| Fonts | Syne + DM Sans |
-
----
-
-## 📄 License
-
-MIT — free to use, modify, and distribute.
+Pathfinder AI provides a personalized, AI-driven learning experience that helps users stay consistent, measure progress, and achieve career goals through structured guidance and intelligent assistance.
