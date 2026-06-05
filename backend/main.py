@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.responses import FileResponse
+import os
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 # pyrefly: ignore [missing-import]
@@ -33,6 +35,10 @@ app.include_router(automation.router, prefix="/api/automation", tags=["Automatio
 
 @app.get("/")
 def root():
+    backend_dir = os.path.dirname(os.path.abspath(__file__))
+    index_path = os.path.join(os.path.dirname(backend_dir), "frontend", "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
     return {"message": "AI Learning Platform API", "status": "running"}
 
 @app.get("/health")

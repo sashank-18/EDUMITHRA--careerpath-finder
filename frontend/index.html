@@ -1546,7 +1546,18 @@ footer {
 // ===================================================
 // STATE
 // ===================================================
-const API = 'http://localhost:8000/api';
+const API = (function() {
+  // If loaded via file:// protocol
+  if (window.location.protocol === 'file:') {
+    return 'https://impound-pacifism-supply.ngrok-free.dev/api';
+  }
+  // If loaded from the frontend dev server (port 3000)
+  if (window.location.port === '3000') {
+    return 'http://localhost:8000/api';
+  }
+  // Otherwise, use the current origin (e.g. if served from backend port 8000 or ngrok)
+  return window.location.origin + '/api';
+})();
 
 let state = {
   user: null,
